@@ -18,6 +18,7 @@ jobs:
         run: terraform init
       - name: Lint
         run: terraform fmt -check
-      - run: echo '{}' > creds.json
+      - name: Get Secret
+        run: echo '${{ secrets.google_creds }}' > creds.json
       - name: Validate
         run: terraform validate -no-color
