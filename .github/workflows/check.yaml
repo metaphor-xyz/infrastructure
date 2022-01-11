@@ -1,0 +1,20 @@
+name: check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+      - name: Lint
+        run: terraform fmt -check
+      - name: Validate
+        run: terraform validate -no-color
