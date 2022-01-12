@@ -75,7 +75,7 @@ resource "google_compute_instance" "ceramic-instance" {
     network            = google_compute_network.vpc_network.id
     subnetwork_project = var.project
     access_config {
-      nat_ip = "${google_compute_address.ceramic-ip-address.address}"
+      nat_ip = google_compute_address.ceramic-ip-address.address
     }
   }
 
