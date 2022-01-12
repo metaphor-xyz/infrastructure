@@ -1,4 +1,4 @@
-name: plan
+name: apply
 
 on:
   push:
@@ -8,12 +8,12 @@ on:
       - '**.md'
 
 jobs:
-  fmt:
+  apply:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
-          perist-credentials: false
+          persist-credentials: false
           fetch-depth: 0
       - uses: hashicorp/setup-terraform@v1
 
@@ -36,6 +36,6 @@ jobs:
       - name: Commit State
         uses: actions-js/push@v1.3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PUSH_TOKEN }}
           message: '[ci skip] save state'
 
