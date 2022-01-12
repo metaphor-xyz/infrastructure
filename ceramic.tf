@@ -49,6 +49,10 @@ resource "google_compute_disk" "ceramic-disk" {
   size    = 10
 }
 
+resource "google_compute_address" "ceramic-ip-address" {
+  name = "ceramic-ip-address"
+}
+
 resource "google_compute_instance" "ceramic-instance" {
   project      = var.project
   name         = "ceramic-daemon"
@@ -70,7 +74,9 @@ resource "google_compute_instance" "ceramic-instance" {
   network_interface {
     network            = google_compute_network.vpc_network.id
     subnetwork_project = var.project
-    access_config {}
+    access_config {
+      nat_ip = "${google_compute_address.ceramic-ip-address.address}"
+    }
   }
 
   metadata = { "gce-container-declaration" = module.ceramic-daemon.metadata_value }
