@@ -8,7 +8,7 @@ module "ceramic-daemon" {
     args = [
       "--hostname", "0.0.0.0",
       "--network", "${var.ceramic_network}",
-      "--ipfs-api", "http://${google_compute_instance.ipfs-instance.network_interface.0.network_ip}:5001",
+      "--ipfs-api", "http://${google_compute_instance.ipfs-instance.network_interface.0.network_ip}:5011",
       "--state-store-directory", "/data",
     ]
 
