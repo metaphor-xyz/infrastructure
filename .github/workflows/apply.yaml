@@ -23,7 +23,7 @@ jobs:
         continue-on-error: true
 
       - name: Get Secret
-        run: echo '${{ secrets.google_creds }}' > creds.json
+        run: echo '${{ secrets.GOOGLE_CREDS }}' > creds.json
 
       - name: Terraform Init
         id: init
@@ -33,9 +33,19 @@ jobs:
         id: plan
         run: terraform apply -no-color -auto-approve
 
+      - name: Get App Private Key
+        run: echo '${{ secrets.APP_KEY }}' > pk.pem
+
+      - name: Generate Token
+        id: token
+        run: |
+          TOKEN="$(npx obtain-github-app-installation-access-token -a 164080 -i 22180275 -k ./pk.pem)"
+          echo "::add-mask::$TOKEN"
+          echo "::set-output name=token::$TOKEN"
+
       - name: Commit State
         uses: actions-js/push@v1.3
         with:
-          github_token: ${{ secrets.PUSH_TOKEN }}
+          github_token: ${{ steps.token.outputs.token }}
           message: '[ci skip] save state'
 
