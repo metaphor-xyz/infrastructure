@@ -46,7 +46,7 @@ jobs:
       - name: Commit State
         uses: github-actions-x/commit@v2.8
         with:
-          github_token: ${{ steps.token.outputs.token }}
+          github-token: ${{ steps.token.outputs.token }}
           push-branch: 'main'
           commit-message: '[ci skip] save state'
           force-add: 'false'
