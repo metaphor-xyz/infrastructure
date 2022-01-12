@@ -44,8 +44,11 @@ jobs:
           echo "::set-output name=token::$TOKEN"
 
       - name: Commit State
-        uses: actions-js/push@v1.3
+        uses: github-actions-x/commit@v2.8
         with:
           github_token: ${{ steps.token.outputs.token }}
-          message: '[ci skip] save state'
+          push-branch: 'main'
+          commit-message: '[ci skip] save state'
+          force-add: 'false'
+          files: terraform.tfstate
 
