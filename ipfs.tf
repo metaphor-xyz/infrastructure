@@ -95,3 +95,17 @@ resource "google_compute_firewall" "ipfs-firewall" {
   source_tags = ["ceramic-daemon"]
   target_tags = ["ipfs-daemon"]
 }
+
+resource "google_compute_firewall" "ipfs-allow-ssh" {
+  name    = "ipfs-allow-ssh"
+  project = var.project
+  network = google_compute_network.vpc_network.id
+
+  allow {
+    protocol = "tcp"
+    ports    = [22]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["ipfs-daemon"]
+}
