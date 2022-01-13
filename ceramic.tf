@@ -7,14 +7,10 @@ module "ceramic-daemon" {
 
     args = [
       "--hostname", "0.0.0.0",
+      "--port", "80",
       "--network", "${var.ceramic_network}",
       "--ipfs-api", "http://${google_compute_instance.ipfs-instance.network_interface.0.network_ip}:5011",
       "--state-store-directory", "/data",
-    ]
-
-    ports = [
-      { "containerPort" : 7007 },
-      { "containerPort" : 9229 },
     ]
 
     volumeMounts = [
@@ -95,7 +91,7 @@ resource "google_compute_firewall" "ceramic-firewall" {
 
   allow {
     protocol = "tcp"
-    ports    = [7007, 9229]
+    ports    = [80]
   }
 
   allow {
